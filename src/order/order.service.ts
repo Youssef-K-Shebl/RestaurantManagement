@@ -58,7 +58,6 @@ export class OrderService {
 
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);
-    console.log(startOfDay, endOfDay);
 
     const orders = await this.orderModel.aggregate([
       {

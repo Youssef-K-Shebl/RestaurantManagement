@@ -26,7 +26,38 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## 📌 Features
+
+- **Modular architecture** for better scalability
+- **MongoDB database integration** with Mongoose
+- **Environment-based configuration** (`.env` support)
+- **Global error handling & validation**
+- **Swagger API Documentation**
+
+---
+
+## 📁 Project Setup
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **[Node.js](https://nodejs.org/) v18+**
+- **[MongoDB](https://www.mongodb.com/try/download/community)**
+- **Package manager:** `npm` or `yarn`
+
+---
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Youssef-K-Shebl/RestaurantManagement
+cd RestaurantManagement
+```
+
+---
+
+### Install Dependencies
 
 ```bash
 $ npm install
@@ -34,66 +65,76 @@ $ npm install
 
 ## Compile and run the project
 
-```bash
-# development
-$ npm run start
+### Create a `.env` File
 
-# watch mode
-$ npm run start:dev
+Inside the project root, create a `.env` file and define the following variables:
 
-# production mode
-$ npm run start:prod
+```env
+DATABASE_USERNAME=your_db_username
+DATABASE_PASSWORD=your_db_password
+DATABASE_NAME=your_database_name
+NODE_ENV=development  # or production
 ```
 
-## Run tests
+---
+
+### Running the Application
+
+#### **For Development Mode** 🛠️
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+#### **For Production Mode** 🚀
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 🛠 API Endpoints
 
-Check out a few resources that may come in handy when working with NestJS:
+### **🛒 Orders Resource**
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+| Method    | Endpoint              | Description            |
+| --------- | --------------------- | ---------------------- |
+| **GET**   | `/order`              | Get all orders         |
+| **GET**   | `/order/daily-report` | Get daily sales report |
+| **POST**  | `/order`              | Create a new order     |
+| **GET**   | `/order/:id`          | Get order by ID        |
+| **PATCH** | `/order/:id`          | Update an order        |
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### **📦 Items Resource**
 
-## Stay in touch
+| Method   | Endpoint    | Description       |
+| -------- | ----------- | ----------------- |
+| **GET**  | `/item`     | Get all items     |
+| **POST** | `/item`     | Create a new item |
+| **GET**  | `/item/:id` | Get item by ID    |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 📖 API Documentation
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+To explore all available API endpoints, use the built-in Swagger UI:
+
+```
+http://localhost:3000/api
+```
+
+---
+
+## 🔹 Contributing
+
+Feel free to submit issues and feature requests. Pull requests are welcome! 🚀
+
+---
+
+## 📝 License
+
+This project is **open-source** and available under the [MIT License](LICENSE).
