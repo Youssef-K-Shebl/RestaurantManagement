@@ -1,30 +1,13 @@
+````markdown
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📌 Project Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a **Restaurant Management API** built using **NestJS** with MongoDB and Redis. It provides features like **order management**, **daily sales reporting**, and **caching** for performance optimization.
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
 ## 📌 Features
 
@@ -33,39 +16,89 @@
 - **Environment-based configuration** (`.env` support)
 - **Global error handling & validation**
 - **Swagger API Documentation**
-
----
+- **Rdis caching for performance optimization**
 
 ## 📁 Project Setup
 
-### Prerequisites
+### **Prerequisites**
 
-Before you begin, ensure you have the following installed:
+Ensure you have the following installed:
 
 - **[Node.js](https://nodejs.org/) v18+**
 - **[MongoDB](https://www.mongodb.com/try/download/community)**
-- **Package manager:** `npm` or `yarn`
+- **[Docker](https://www.docker.com/get-started)** (for containerized setup)
+- **[Redis](https://redis.io/docs/getting-started/)** (for caching the daily report)
 
 ---
 
-### Clone the Repository
+## 🚀 **Setup with Docker**
+
+To run the application using **Docker**, follow these steps:
+
+1️⃣ **Clone the Repository**
+
+```bash
+git clone https://github.com/Youssef-K-Shebl/RestaurantManagement
+cd RestaurantManagement
+```
+````
+
+2️⃣ **Build the Docker Image**
+
+```bash
+docker build -t nestjs-app .
+```
+
+3️⃣ **Run the Docker Container with `.env`**
+
+```bash
+docker run -p 3000:3000 --env-file .env --name nestjs-container nestjs-app
+```
+
+4️⃣ **Check Running Containers**
+
+```bash
+docker ps
+```
+
+Make sure the `nestjs-container` is running.
+
+5️⃣ **To Stop the Container**
+
+```bash
+docker stop nestjs-container
+```
+
+6️⃣ **To Remove the Container**
+
+```bash
+docker rm nestjs-container
+```
+
+7️⃣ **To Restart the Container**
+
+```bash
+docker start nestjs-container
+```
+
+---
+
+## 🔧 **Manual Setup Without Docker**
+
+### **Clone the Repository**
 
 ```bash
 git clone https://github.com/Youssef-K-Shebl/RestaurantManagement
 cd RestaurantManagement
 ```
 
----
-
-### Install Dependencies
+### **Install Dependencies**
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
-
-### Create a `.env` File
+### **Create a `.env` File**
 
 Inside the project root, create a `.env` file and define the following variables:
 
@@ -73,12 +106,34 @@ Inside the project root, create a `.env` file and define the following variables
 DATABASE_USERNAME=your_db_username
 DATABASE_PASSWORD=your_db_password
 DATABASE_NAME=your_database_name
-NODE_ENV=development  # or production
+NODE_ENV=development
+REDIS_HOST=localhost
+REDIS_PORT=6379
 ```
 
----
+**Note:** Ensure `REDIS_HOST` and `REDIS_PORT` are set correctly to connect to Redis.
 
-### Running the Application
+### **Start Redis Server**
+
+Ensure Redis is **installed and running** before starting the app:
+
+```bash
+redis-server
+```
+
+To verify Redis is running, use:
+
+```bash
+redis-cli PING
+```
+
+Expected response:
+
+```bash
+PONG
+```
+
+### **Running the Application**
 
 #### **For Development Mode** 🛠️
 
@@ -99,13 +154,13 @@ npm run start:prod
 
 ### **🛒 Orders Resource**
 
-| Method    | Endpoint              | Description            |
-| --------- | --------------------- | ---------------------- |
-| **GET**   | `/order`              | Get all orders         |
-| **GET**   | `/order/daily-report` | Get daily sales report |
-| **POST**  | `/order`              | Create a new order     |
-| **GET**   | `/order/:id`          | Get order by ID        |
-| **PATCH** | `/order/:id`          | Update an order        |
+| Method    | Endpoint              | Description                                |
+| --------- | --------------------- | ------------------------------------------ |
+| **GET**   | `/order`              | Get all orders                             |
+| **GET**   | `/order/daily-report` | Get daily sales report (cached with Redis) |
+| **POST**  | `/order`              | Create a new order                         |
+| **GET**   | `/order/:id`          | Get order by ID                            |
+| **PATCH** | `/order/:id`          | Update an order                            |
 
 ---
 
@@ -121,10 +176,30 @@ npm run start:prod
 
 ## 📖 API Documentation
 
-To explore all available API endpoints, use the built-in Swagger UI:
+To explore all available API endpoints, use the built-in **Swagger UI**:
 
 ```
 http://localhost:3000/api
+```
+
+---
+
+## 🔹 Redis Caching for Daily Sales Report
+
+The **daily sales report** is cached in Redis to improve performance. Once generated, it is stored in Redis until **mid night**, reducing database load.
+
+### **Check Cached Data in Redis**
+
+To verify if the report is cached, use Redis CLI:
+
+```bash
+redis-cli GET "daily-sales-report"
+```
+
+To check expiration time:
+
+```bash
+redis-cli TTL "daily-sales-report"
 ```
 
 ---
@@ -138,3 +213,7 @@ Feel free to submit issues and feature requests. Pull requests are welcome! 🚀
 ## 📝 License
 
 This project is **open-source** and available under the [MIT License](LICENSE).
+
+```
+
+```

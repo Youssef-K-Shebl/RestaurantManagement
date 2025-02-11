@@ -1,13 +1,17 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Order } from 'src/schemas/order.schema';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import Redis from 'ioredis';
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
+  constructor(
+    @InjectModel(Order.name) private orderModel: Model<Order>,
+    @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
+  ) {}
 
   getAllOrders() {
     return this.orderModel.find().populate('items.item');
@@ -44,7 +48,7 @@ export class OrderService {
         }
       });
     }
-
+    await this.redisClient.del('daily-sales-report');
     return order.save();
   }
 
@@ -53,13 +57,19 @@ export class OrderService {
   }
 
   async generateDailySalesReport() {
+    const cacheKey = 'daily-sales-report';
+    const cachedReport = await this.redisClient.get(cacheKey);
+    if (cachedReport) {
+      return JSON.parse(cachedReport);
+    }
+
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
 
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);
 
-    const orders = await this.orderModel.aggregate([
+    const report = await this.orderModel.aggregate([
       {
         $match: {
           createdAt: { $gte: startOfDay, $lte: endOfDay },
@@ -174,7 +184,19 @@ export class OrderService {
       },
     ]);
 
-    if (orders.length === 0) {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(23, 59, 59, 999);
+    const ttl = (midnight.getTime() - now.getTime()) / 1000;
+
+    await this.redisClient.set(
+      cacheKey,
+      JSON.stringify(report),
+      'EX',
+      Math.round(ttl),
+    );
+
+    if (report.length === 0) {
       return {
         totalRevenue: 0,
         totalOrders: 0,
@@ -182,6 +204,6 @@ export class OrderService {
       };
     }
 
-    return orders;
+    return report;
   }
 }
