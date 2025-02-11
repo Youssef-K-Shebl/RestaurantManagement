@@ -1,4 +1,3 @@
-````markdown
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -41,7 +40,6 @@ To run the application using **Docker**, follow these steps:
 git clone https://github.com/Youssef-K-Shebl/RestaurantManagement
 cd RestaurantManagement
 ```
-````
 
 2️⃣ **Build the Docker Image**
 
